@@ -43,13 +43,17 @@ Thumbs.db
 .RData
 .Ruserdata
 
-# Outputs
+# Outputs (but allow examples/)
 outputs/
-*.rds
+test_*/
 *.xlsx
 *.pdf
 *.png
 *.html
+
+# R data files (but allow examples/*.rds)
+*.rds
+!examples/*.rds
 
 # Environment
 .env
