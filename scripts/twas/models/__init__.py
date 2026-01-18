@@ -68,3 +68,5 @@ __all__ = [
 # Import models to trigger registration
 from . import elastic_net
 from . import lasso
+from . import gblup
+from . import true_effects
