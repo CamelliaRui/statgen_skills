@@ -34,3 +34,72 @@ def test_base_model_interface():
     assert hasattr(ExpressionModel, "get_weights")
     assert hasattr(ExpressionModel, "get_nonzero_snps")
     assert hasattr(ExpressionModel, "cross_validate")
+
+
+def test_elastic_net_fit_and_predict():
+    """Test ElasticNet model fitting and prediction."""
+    from scripts.twas.models import get_model
+
+    np.random.seed(42)
+    n_samples, n_snps = 100, 50
+    X = np.random.randint(0, 3, (n_samples, n_snps)).astype(float)
+
+    # True sparse effects
+    true_weights = np.zeros(n_snps)
+    true_weights[:5] = np.random.randn(5) * 0.5
+    y = X @ true_weights + np.random.randn(n_samples) * 0.1
+
+    model = get_model("elastic_net")
+    model.fit(X, y)
+
+    # Check predictions
+    y_pred = model.predict(X)
+    assert y_pred.shape == y.shape
+
+    # Check weights are sparse
+    weights = model.get_weights()
+    assert weights.shape == (n_snps,)
+    assert len(model.get_nonzero_snps()) < n_snps  # Should be sparse
+
+
+def test_lasso_fit_and_predict():
+    """Test LASSO model fitting and prediction."""
+    from scripts.twas.models import get_model
+
+    np.random.seed(42)
+    n_samples, n_snps = 100, 50
+    X = np.random.randint(0, 3, (n_samples, n_snps)).astype(float)
+    true_weights = np.zeros(n_snps)
+    true_weights[:3] = [0.5, -0.3, 0.2]
+    y = X @ true_weights + np.random.randn(n_samples) * 0.1
+
+    model = get_model("lasso")
+    model.fit(X, y)
+
+    y_pred = model.predict(X)
+    assert y_pred.shape == y.shape
+
+    # LASSO should be very sparse
+    n_nonzero = len(model.get_nonzero_snps())
+    assert n_nonzero < n_snps
+
+
+def test_cross_validate_returns_metrics():
+    """Test cross-validation returns proper metrics."""
+    from scripts.twas.models import get_model
+
+    np.random.seed(42)
+    n_samples, n_snps = 200, 30
+    X = np.random.randint(0, 3, (n_samples, n_snps)).astype(float)
+    true_weights = np.zeros(n_snps)
+    true_weights[:5] = np.random.randn(5)
+    y = X @ true_weights + np.random.randn(n_samples) * 0.5
+
+    model = get_model("elastic_net")
+    metrics = model.cross_validate(X, y, cv=5, seed=42)
+
+    assert "cv_r2" in metrics
+    assert "cv_corr" in metrics
+    assert "n_nonzero" in metrics
+    assert 0 <= metrics["cv_r2"] <= 1
+    assert -1 <= metrics["cv_corr"] <= 1

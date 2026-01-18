@@ -64,3 +64,7 @@ __all__ = [
     "get_model",
     "register_model",
 ]
+
+# Import models to trigger registration
+from . import elastic_net
+from . import lasso
