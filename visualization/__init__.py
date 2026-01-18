@@ -1,7 +1,7 @@
 """
 Visualization modules for statgen-skills.
 
-This package provides plotting functions for SuSiE fine-mapping and LDSC results.
+This package provides plotting functions for SuSiE fine-mapping, LDSC, and TWAS results.
 """
 
 from .credible_set import (
@@ -17,6 +17,12 @@ from .ldsc_plots import (
     create_rg_heatmap,
     create_enrichment_plot,
 )
+from .twas_plots import (
+    create_power_curve,
+    create_model_comparison,
+    create_twas_manhattan,
+    create_qq_plot,
+)
 
 __all__ = [
     "create_locus_zoom",
@@ -29,4 +35,8 @@ __all__ = [
     "create_h2_barplot",
     "create_rg_heatmap",
     "create_enrichment_plot",
+    "create_power_curve",
+    "create_model_comparison",
+    "create_twas_manhattan",
+    "create_qq_plot",
 ]
