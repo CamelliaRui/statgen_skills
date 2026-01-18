@@ -1,6 +1,6 @@
 ---
 name: statgen-skills
-description: Statistical genetics toolkit for fine-mapping (SuSiE) and LD score regression (LDSC), with support for GWAS summary statistics, heritability estimation, genetic correlations, and publication-ready reports
+description: Statistical genetics toolkit for fine-mapping (SuSiE), LD score regression (LDSC), and TWAS simulation, with support for GWAS summary statistics, heritability estimation, genetic correlations, and publication-ready reports
 ---
 
 # Statistical Genetics Skills
@@ -56,6 +56,46 @@ Estimate SNP heritability, genetic correlations, and partition heritability by f
 - **Genetic correlation (rg):** Shared genetic architecture between traits (-1 to 1)
 - **Enrichment:** How much more heritability is in an annotation than expected by SNP count
 - **Intercept:** Quality control metric; values > 1 suggest population stratification
+
+### TWAS Simulator
+
+Simulate Transcriptome-Wide Association Studies for methods development, power analysis, and teaching.
+
+**Capabilities:**
+- Simulate gene expression with configurable cis-heritability
+- Multiple expression prediction models (Elastic Net, LASSO, GBLUP, oracle)
+- Full TWAS pipeline: expression → weights → association
+- Power and FDR calculation
+- Publication-ready visualizations (power curves, Manhattan, QQ plots)
+
+**API Functions:**
+- `simulate_twas(genotypes, n_causal_genes, ...)` - Run complete simulation
+- `simulate_expression(genotypes, h2_cis, n_causal)` - Simulate expression only
+- `run_twas(pred_expression, phenotype)` - TWAS association test
+- `get_model(name)` - Get expression prediction model
+
+**Example Usage:**
+
+```
+# Basic simulation
+"Simulate a TWAS with 100 genes, 10 causal, h2_cis=0.1"
+
+# Power analysis
+"Run TWAS power analysis varying eQTL sample size from 100 to 1000"
+
+# Model comparison
+"Compare Elastic Net vs LASSO for TWAS prediction"
+```
+
+**Key Parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `h2_cis` | 0.1 | Cis-heritability of expression |
+| `h2_trait` | 0.5 | Total trait heritability |
+| `prop_mediated` | 0.1 | Fraction of h² mediated through expression |
+| `n_causal_cis` | 1 | Causal cis-eQTLs per gene |
+| `n_causal_genes` | 10 | Genes with trait effects |
 
 ## Input Formats
 
@@ -116,6 +156,9 @@ Three options:
 - **h² bar plot**: Heritability estimates with confidence intervals
 - **rg heatmap**: Genetic correlation matrix with significance
 - **Enrichment plot**: Forest plot of s-LDSC enrichments
+- **Power curve**: TWAS power vs parameter values
+- **TWAS Manhattan**: Gene-level association plot
+- **QQ plot**: P-value calibration with genomic inflation
 
 ### Reports
 - **Interactive HTML**: All figures with hover details, sortable tables, interpretation guide
@@ -174,6 +217,13 @@ A 95% credible set is a group of variants that together have a 95% probability o
 - `scripts/ldsc/reference_data.py` - Reference data management
 - `scripts/ldsc/parsers.py` - Log file parsing
 
+### TWAS
+- `scripts/twas/simulate.py` - Main TWAS simulation orchestrator
+- `scripts/twas/expression.py` - Expression simulation
+- `scripts/twas/association.py` - TWAS association testing
+- `scripts/twas/genotype.py` - Genotype loading and processing
+- `scripts/twas/models/` - Expression prediction models (ElasticNet, LASSO, GBLUP)
+
 ## Visualization
 
 - `visualization/locus_zoom.py` - Regional association plots
@@ -181,6 +231,7 @@ A 95% credible set is a group of variants that together have a 95% probability o
 - `visualization/credible_set.py` - Credible set plots
 - `visualization/interactive_report.py` - HTML report generation
 - `visualization/ldsc_plots.py` - h² bar charts, rg heatmaps, enrichment plots
+- `visualization/twas_plots.py` - Power curves, Manhattan plots, QQ plots
 
 ## Best Practices
 
@@ -199,5 +250,4 @@ A 95% credible set is a group of variants that together have a 95% probability o
 
 ## Future Tools (Planned)
 
-- **TWAS** - Transcriptome-wide association studies
-- **TWAS simulator** - Simulate TWAS data for methods development
+- **TWAS** - Transcriptome-wide association studies (real data analysis)
