@@ -1,13 +1,17 @@
 """
 Visualization modules for statgen-skills.
 
-This package provides plotting functions for SuSiE fine-mapping, LDSC, and TWAS results.
+This package provides plotting functions for SuSiE fine-mapping, LDSC, TWAS results, and FUSION TWAS.
 """
 
 from .credible_set import (
     create_credible_set_plot,
     create_credible_set_summary_table,
     print_credible_set_summary,
+)
+from .fusion_plots import (
+    create_fusion_locus_plot,
+    create_tissue_heatmap,
 )
 from .interactive_report import generate_html_report
 from .locus_zoom import create_locus_zoom
@@ -39,4 +43,6 @@ __all__ = [
     "create_model_comparison",
     "create_twas_manhattan",
     "create_qq_plot",
+    "create_fusion_locus_plot",
+    "create_tissue_heatmap",
 ]

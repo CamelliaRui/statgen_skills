@@ -160,7 +160,7 @@ statgen_skills/
 - [x] SuSiE fine-mapping
 - [x] LDSC (LD Score Regression) - heritability, genetic correlation, s-LDSC
 - [x] TWAS simulator
-- [ ] TWAS (Transcriptome-Wide Association Studies) - real data analysis
+- [x] FUSION TWAS - gene-trait association testing
 
 ## License
 
