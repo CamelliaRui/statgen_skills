@@ -17,6 +17,14 @@ from .utils import (
     format_sumstats_for_fusion,
 )
 
+from .reference_data import (
+    list_available_tissues,
+    download_weights,
+    download_ld_reference,
+    weights_available,
+    ld_reference_available,
+)
+
 __all__ = [
     "get_fusion_dir",
     "check_r_installed",
@@ -26,4 +34,9 @@ __all__ = [
     "download_fusion",
     "validate_sumstats_columns",
     "format_sumstats_for_fusion",
+    "list_available_tissues",
+    "download_weights",
+    "download_ld_reference",
+    "weights_available",
+    "ld_reference_available",
 ]
