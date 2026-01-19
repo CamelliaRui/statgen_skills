@@ -138,6 +138,50 @@ A 95% credible set is a group of variants that together have a 95% probability o
 - Summary statistics analysis assumes linear model
 - Not suitable for highly polygenic traits with many small effects
 
+### FUSION TWAS
+
+Run Transcriptome-Wide Association Studies using FUSION to identify genes whose expression is associated with complex traits.
+
+**Capabilities:**
+- Association testing with pre-computed GTEx v8 weights (49 tissues)
+- Custom expression weight computation from eQTL data
+- Conditional analysis to identify independent signals
+- Multi-chromosome parallel execution
+- Automatic reference data download and caching
+
+**API Functions:**
+- `run_twas_association(sumstats, tissue, output_dir)` - Run TWAS
+- `list_available_tissues()` - List GTEx v8 tissues
+- `download_weights(tissue)` - Download expression weights
+- `check_dependencies()` - Check R, FUSION, PLINK availability
+
+**Example Usage:**
+
+```
+# Basic TWAS
+"Run TWAS on my height GWAS using GTEx whole blood"
+
+# Multi-tissue analysis
+"Run TWAS across brain tissues for my schizophrenia GWAS"
+
+# Check significant genes
+"Which genes are significant in my TWAS results?"
+```
+
+**Key Parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `tissue` | required | GTEx tissue name |
+| `population` | EUR | LD reference population |
+| `chromosomes` | 1-22 | Chromosomes to analyze |
+| `gwas_n` | None | Sample size (if not in file) |
+| `coloc` | False | Run colocalization |
+
+**Requirements:**
+- R 4.0+ with packages: optparse, glmnet
+- PLINK (for custom weights only)
+
 ## Future Tools (Planned)
 
 - **TWAS** - Transcriptome-wide association studies
