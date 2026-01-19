@@ -25,6 +25,9 @@ from .reference_data import (
     ld_reference_available,
 )
 
+from .run_fusion import run_twas_association, TWASResults
+from .parsers import TWASResult
+
 __all__ = [
     "get_fusion_dir",
     "check_r_installed",
@@ -39,4 +42,7 @@ __all__ = [
     "download_ld_reference",
     "weights_available",
     "ld_reference_available",
+    "run_twas_association",
+    "TWASResults",
+    "TWASResult",
 ]
