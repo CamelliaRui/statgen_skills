@@ -11,8 +11,7 @@ def test_load_plink_returns_genotype_data():
     """Test loading genotypes from PLINK files."""
     from scripts.twas.genotype import load_plink
 
-    # Will raise FileNotFoundError if pandas-plink is installed,
-    # or ImportError if pandas-plink is not installed
+    # Will fail with FileNotFoundError or ImportError (if pandas-plink not installed)
     with pytest.raises((FileNotFoundError, ImportError)):
         load_plink("nonexistent_prefix")
 

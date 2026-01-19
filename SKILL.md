@@ -1,6 +1,6 @@
 ---
 name: statgen-skills
-description: Statistical genetics toolkit for fine-mapping (SuSiE), with support for GWAS summary statistics and individual-level data, LD computation, and publication-ready reports
+description: Statistical genetics toolkit for fine-mapping (SuSiE), LD score regression (LDSC), and TWAS simulation, with support for GWAS summary statistics, heritability estimation, genetic correlations, and publication-ready reports
 ---
 
 # Statistical Genetics Skills
@@ -19,6 +19,83 @@ Run Sum of Single Effects (SuSiE) regression to identify causal variants at GWAS
 - Automatic credible set construction with configurable coverage
 - Detection of multiple independent causal signals
 - Per-variant posterior inclusion probabilities (PIP)
+
+### LDSC (LD Score Regression)
+
+Estimate SNP heritability, genetic correlations, and partition heritability by functional annotations.
+
+**Capabilities:**
+- SNP heritability (h²) estimation from GWAS summary statistics
+- Genetic correlation (rg) between multiple traits
+- Stratified LDSC (s-LDSC) for heritability partitioning by annotations
+- Automatic reference data download for EUR, EAS, AFR, SAS, AMR populations
+- Publication-ready visualization (h² bar charts, rg heatmaps, enrichment plots)
+
+**API Functions:**
+- `estimate_heritability(sumstats, output_dir, population)` - SNP h² from GWAS
+- `genetic_correlation(sumstats_list, output_dir, population)` - rg between traits
+- `partitioned_heritability(sumstats, annotations, output_dir)` - s-LDSC enrichment
+- `munge_sumstats(input, output)` - Convert summary stats to LDSC format
+
+**Example Usage:**
+
+```
+# Estimate heritability
+"Estimate the SNP heritability for my height GWAS using EUR reference"
+
+# Genetic correlation
+"Calculate genetic correlations between height, BMI, and educational attainment"
+
+# Partitioned heritability
+"Partition heritability for schizophrenia using baseline-LD annotations"
+```
+
+**Key Concepts:**
+
+- **SNP heritability (h²):** Proportion of trait variance explained by common SNPs
+- **Genetic correlation (rg):** Shared genetic architecture between traits (-1 to 1)
+- **Enrichment:** How much more heritability is in an annotation than expected by SNP count
+- **Intercept:** Quality control metric; values > 1 suggest population stratification
+
+### TWAS Simulator
+
+Simulate Transcriptome-Wide Association Studies for methods development, power analysis, and teaching.
+
+**Capabilities:**
+- Simulate gene expression with configurable cis-heritability
+- Multiple expression prediction models (Elastic Net, LASSO, GBLUP, oracle)
+- Full TWAS pipeline: expression → weights → association
+- Power and FDR calculation
+- Publication-ready visualizations (power curves, Manhattan, QQ plots)
+
+**API Functions:**
+- `simulate_twas(genotypes, n_causal_genes, ...)` - Run complete simulation
+- `simulate_expression(genotypes, h2_cis, n_causal)` - Simulate expression only
+- `run_twas(pred_expression, phenotype)` - TWAS association test
+- `get_model(name)` - Get expression prediction model
+
+**Example Usage:**
+
+```
+# Basic simulation
+"Simulate a TWAS with 100 genes, 10 causal, h2_cis=0.1"
+
+# Power analysis
+"Run TWAS power analysis varying eQTL sample size from 100 to 1000"
+
+# Model comparison
+"Compare Elastic Net vs LASSO for TWAS prediction"
+```
+
+**Key Parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `h2_cis` | 0.1 | Cis-heritability of expression |
+| `h2_trait` | 0.5 | Total trait heritability |
+| `prop_mediated` | 0.1 | Fraction of h² mediated through expression |
+| `n_causal_cis` | 1 | Causal cis-eQTLs per gene |
+| `n_causal_genes` | 10 | Genes with trait effects |
 
 ## Input Formats
 
@@ -49,11 +126,22 @@ Three options:
 
 ## Analysis Parameters
 
+### SuSiE Parameters
+
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `L` | 10 | Maximum number of causal variants |
 | `coverage` | 0.95 | Credible set coverage probability |
 | `min_abs_corr` | 0.5 | Minimum LD for credible set membership |
+
+### LDSC Parameters
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `population` | EUR | Reference population (EUR, EAS, AFR, SAS, AMR) |
+| `no_intercept` | False | Constrain intercept to 1 |
+| `samp_prev` | None | Sample prevalence (case-control) |
+| `pop_prev` | None | Population prevalence (case-control) |
 
 ## Outputs
 
@@ -65,6 +153,12 @@ Three options:
 - **Locus zoom**: Regional association plot with PIP track and gene annotations
 - **PIP plot**: Bar chart of posterior inclusion probabilities
 - **Credible set visualization**: Variants grouped by credible set
+- **h² bar plot**: Heritability estimates with confidence intervals
+- **rg heatmap**: Genetic correlation matrix with significance
+- **Enrichment plot**: Forest plot of s-LDSC enrichments
+- **Power curve**: TWAS power vs parameter values
+- **TWAS Manhattan**: Gene-level association plot
+- **QQ plot**: P-value calibration with genomic inflation
 
 ### Reports
 - **Interactive HTML**: All figures with hover details, sortable tables, interpretation guide
@@ -111,10 +205,24 @@ A 95% credible set is a group of variants that together have a 95% probability o
 
 ## Scripts
 
+### SuSiE
 - `scripts/susie/run_susie.R` - Core SuSiE execution wrapper
 - `scripts/ld/compute_ld.R` - LD matrix computation
 - `scripts/ld/fetch_ld_ref.py` - Reference panel retrieval
 - `scripts/utils/validate_input.py` - Input validation
+
+### LDSC
+- `scripts/ldsc/run_ldsc.py` - Main entry point for all LDSC analyses
+- `scripts/ldsc/munge.py` - Summary statistics preprocessing
+- `scripts/ldsc/reference_data.py` - Reference data management
+- `scripts/ldsc/parsers.py` - Log file parsing
+
+### TWAS
+- `scripts/twas/simulate.py` - Main TWAS simulation orchestrator
+- `scripts/twas/expression.py` - Expression simulation
+- `scripts/twas/association.py` - TWAS association testing
+- `scripts/twas/genotype.py` - Genotype loading and processing
+- `scripts/twas/models/` - Expression prediction models (ElasticNet, LASSO, GBLUP)
 
 ## Visualization
 
@@ -122,6 +230,8 @@ A 95% credible set is a group of variants that together have a 95% probability o
 - `visualization/pip_plot.py` - PIP visualization
 - `visualization/credible_set.py` - Credible set plots
 - `visualization/interactive_report.py` - HTML report generation
+- `visualization/ldsc_plots.py` - h² bar charts, rg heatmaps, enrichment plots
+- `visualization/twas_plots.py` - Power curves, Manhattan plots, QQ plots
 
 ## Best Practices
 
@@ -184,6 +294,4 @@ Run Transcriptome-Wide Association Studies using FUSION to identify genes whose 
 
 ## Future Tools (Planned)
 
-- **TWAS** - Transcriptome-wide association studies
-- **TWAS simulator** - Simulate TWAS data for methods development
-- **s-LDSC** - Stratified LD score regression for heritability partitioning
+- **TWAS** - Transcriptome-wide association studies (real data analysis)
