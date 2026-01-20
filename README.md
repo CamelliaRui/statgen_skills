@@ -84,16 +84,68 @@ print(f"Power: {result['power_metrics']['elastic_net']['power']:.3f}")
 
 ### Use with Claude
 
+This skill is designed to be used with Claude as a custom skill. When enabled, Claude can run statistical genetics analyses, interpret results, and generate publication-ready figures on your behalf.
+
+#### Enabling the Skill
+
+1. Copy this repository to your Claude custom skills directory
+2. The skill will be automatically loaded when you start a Claude session
+3. Claude will have access to all the tools defined in `SKILL.md`
+
+#### What Claude Can Help With
+
+- **Run analyses**: Execute SuSiE, LDSC, TWAS simulation, and FUSION TWAS on your data
+- **Interpret results**: Explain PIPs, credible sets, heritability estimates, and TWAS associations
+- **Troubleshoot**: Debug input format issues, missing dependencies, or unexpected results
+- **Generate figures**: Create locus zoom plots, Manhattan plots, heritability bar charts, and more
+- **Design studies**: Help plan power analyses and choose appropriate parameters
+
+#### Example Prompts
+
+**Fine-Mapping (SuSiE)**
 ```
 "Run SuSiE fine-mapping on my GWAS summary statistics.
 Sample size is 50,000. Use EUR 1000G reference LD."
 
+"Fine-map the locus around rs12345 with L=5 causal variants."
+
+"What's the probability that rs67890 is causal?"
+```
+
+**Heritability & Genetic Correlation (LDSC)**
+```
 "Estimate the SNP heritability for my height GWAS using EUR reference."
 
 "Calculate genetic correlations between height, BMI, and T2D."
 
-"Simulate a TWAS with 100 genes, 10 causal, and compare Elastic Net vs LASSO."
+"Partition heritability for my GWAS using baseline-LD annotations."
 ```
+
+**TWAS Simulation**
+```
+"Simulate a TWAS with 100 genes, 10 causal, and compare Elastic Net vs LASSO."
+
+"Run a power analysis for TWAS varying eQTL sample size from 100 to 1000."
+
+"What's the expected power if cis-heritability is 0.05?"
+```
+
+**FUSION TWAS**
+```
+"Run TWAS on my schizophrenia GWAS using GTEx brain cortex tissue."
+
+"List available GTEx tissues for TWAS analysis."
+
+"Which genes are significantly associated with my trait?"
+```
+
+#### Tips for Best Results
+
+1. **Provide context**: Mention your sample size, population ancestry, and analysis goals
+2. **Specify file paths**: Use absolute paths or ensure files are in the working directory
+3. **Ask for explanations**: If you're new to these methods, ask Claude to explain the results
+4. **Iterate**: Start with default parameters, then refine based on initial results
+5. **Request visualizations**: Ask for specific plot types to include in publications
 
 ## Input Formats
 
