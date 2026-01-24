@@ -40,8 +40,10 @@ def extract_theme_colors(prs: Presentation) -> Dict[str, str]:
                         if color is not None:
                             colors[name] = str(color)
                     except Exception:
+                        # Silently ignore: color extraction may fail for various PPTX formats
                         pass
     except Exception:
+        # Silently ignore: theme access may fail for minimal or malformed presentations
         pass
 
     # Fallback: scan slides for commonly used colors
@@ -75,6 +77,7 @@ def _extract_colors_from_slides(prs: Presentation) -> Dict[str, str]:
                         if "fill" not in colors:
                             colors["fill"] = hex_color
                 except Exception:
+                    # Silently ignore: fill color extraction may fail for complex shapes
                     pass
 
     return colors
@@ -115,6 +118,7 @@ def extract_fonts(prs: Presentation) -> Dict[str, Dict[str, Any]]:
                             fonts["body"] = font_info
                         break
     except Exception:
+        # Silently ignore: slide master font extraction may fail; defaults are returned
         pass
 
     return fonts

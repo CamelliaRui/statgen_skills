@@ -15,7 +15,6 @@ def test_extract_theme_colors_returns_dict():
     colors = extract_theme_colors(prs)
 
     assert isinstance(colors, dict)
-    assert "background" in colors or "accent1" in colors or len(colors) >= 0
 
 
 def test_extract_fonts_returns_dict():
@@ -28,4 +27,5 @@ def test_extract_fonts_returns_dict():
     fonts = extract_fonts(prs)
 
     assert isinstance(fonts, dict)
-    assert "title" in fonts or "body" in fonts or len(fonts) >= 0
+    assert "title" in fonts
+    assert "body" in fonts
