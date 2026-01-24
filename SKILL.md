@@ -292,6 +292,52 @@ Run Transcriptome-Wide Association Studies using FUSION to identify genes whose 
 - R 4.0+ with packages: optparse, glmnet
 - PLINK (for custom weights only)
 
+### Presentation Generator
+
+Generate scientific presentations from research papers (PDF) with customizable templates and formats.
+
+**Capabilities:**
+- Extract content and figures from paper PDFs
+- Apply custom template styling (logo, colors, fonts)
+- Support for Journal Club, Lab Meeting, and Conference Talk formats
+- IMRAD or flexible section structures
+- Extractive or generative bullet point styles
+- Export to PPTX (compatible with Google Slides)
+
+**API Functions:**
+- `generate_presentation(pdf, output, type, ...)` - Generate presentation
+- `PresentationGenerator(config)` - Full control over generation
+- `load_config(name)` - Load preset configuration
+
+**Example Usage:**
+
+```python
+from scripts.presentation import generate_presentation
+
+# Generate a journal club presentation
+generate_presentation(
+    pdf_path="paper.pdf",
+    output_path="presentation.pptx",
+    presentation_type="journal_club",
+    presenter_name="Your Name",
+)
+```
+
+**Interactive Workflow:**
+```
+"Create a journal club presentation from this paper"
+"Generate a 15-minute conference talk from my manuscript"
+"Make a lab meeting presentation with all supplementary figures"
+```
+
+**Presentation Types:**
+
+| Type | Duration | Detail Level | Default Slides |
+|------|----------|--------------|----------------|
+| Journal Club | 30-45 min | Standard | ~20 |
+| Lab Meeting | ~60 min | High (methods, implementation) | ~30 |
+| Conference Talk | 15-30 min | High-level | ~12-25 |
+
 ## Future Tools (Planned)
 
 - **TWAS** - Transcriptome-wide association studies (real data analysis)

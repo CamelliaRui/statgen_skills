@@ -7,6 +7,7 @@ A Claude custom skill for statistical genetics workflows, including SuSiE fine-m
 - **SuSiE Fine-Mapping**: Identify causal variants from GWAS summary statistics or individual-level data
 - **LDSC Analysis**: Estimate SNP heritability, genetic correlations, and partition heritability by annotations
 - **TWAS Simulator**: Simulate transcriptome-wide association studies for methods development and power analysis
+- **Presentation Generator**: Create scientific presentations from research papers with customizable templates
 - **Flexible LD Handling**: User-provided, reference panel, or computed from data
 - **Publication-Ready Outputs**: CSV, Excel, PNG/PDF figures, interactive HTML reports
 - **Adaptive Documentation**: Detailed explanations for newcomers, concise output for experts
@@ -213,6 +214,7 @@ statgen_skills/
 - [x] LDSC (LD Score Regression) - heritability, genetic correlation, s-LDSC
 - [x] TWAS simulator
 - [x] FUSION TWAS - gene-trait association testing
+- [x] Presentation Generator - Journal Club, Lab Meeting, Conference Talk
 
 ## License
 
