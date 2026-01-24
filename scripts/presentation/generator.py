@@ -32,11 +32,14 @@ CONFIG_DIR = Path(__file__).parent.parent.parent / "templates" / "presentation" 
 class PresentationConfig:
     """Configuration for presentation generation."""
 
-    presentation_type: str  # "journal_club", "lab_meeting", "conference"
+    presentation_type: str  # "journal_club", "lab_meeting", "conference_talk"
     structure: str  # "imrad", "custom"
     slide_counts: Dict[str, int]  # section -> number of slides
     include_supplementary: bool
     content_mode: str  # "extractive" or "generative"
+    presenter_name: str = ""
+    presentation_date: str = ""
+    custom_sections: Optional[List[str]] = None
 
 
 # Default configurations for common presentation types
@@ -73,7 +76,7 @@ DEFAULT_CONFIGS: Dict[str, Dict[str, Any]] = {
         "total_default": 26,
         "figure_preference": "all",
     },
-    "conference": {
+    "conference_talk": {
         "name": "Conference Talk",
         "duration_minutes": "15-20",
         "detail_level": "concise",
@@ -291,7 +294,7 @@ def generate_presentation(
         output_path: Path to save the generated PPTX
         pdf_path: Path to research paper PDF (optional)
         template_path: Path to template PPTX for styling (optional)
-        presentation_type: Type of presentation ("journal_club", "lab_meeting", "conference")
+        presentation_type: Type of presentation ("journal_club", "lab_meeting", "conference_talk")
         content_mode: Content extraction mode ("extractive" or "generative")
         include_supplementary: Whether to include supplementary figures
 
