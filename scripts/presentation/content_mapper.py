@@ -5,8 +5,19 @@ Extracts key points from text and maps them to slides based on
 configuration.
 """
 
-from typing import Dict, List, Tuple
+from typing import Dict, List
 import re
+
+# Scoring constants for extractive key point extraction
+MIN_SENTENCE_LENGTH = 20
+MAX_CONCISE_SENTENCE_LENGTH = 150
+SCORE_IMPORTANCE_WORDS = 2
+SCORE_RESULT_WORDS = 2
+SCORE_CONCLUSION_WORDS = 1
+SCORE_STATISTICAL_RESULT = 3
+SCORE_PERCENTAGE = 1
+SCORE_CONCISE = 1
+MAX_PARENTHESIS_LENGTH = 50
 
 
 def extract_key_points(
@@ -33,7 +44,7 @@ def extract_key_points(
 
     # Split into sentences
     sentences = re.split(r"(?<=[.!?])\s+", text)
-    sentences = [s.strip() for s in sentences if len(s.strip()) > 20]
+    sentences = [s.strip() for s in sentences if len(s.strip()) > MIN_SENTENCE_LENGTH]
 
     if mode == "extractive":
         # Score sentences by importance indicators
@@ -44,17 +55,17 @@ def extract_key_points(
 
             # Importance indicators
             if any(word in sent_lower for word in ["significant", "important", "key", "main", "primary"]):
-                score += 2
+                score += SCORE_IMPORTANCE_WORDS
             if any(word in sent_lower for word in ["found", "showed", "demonstrated", "revealed"]):
-                score += 2
+                score += SCORE_RESULT_WORDS
             if any(word in sent_lower for word in ["conclude", "suggest", "indicate"]):
-                score += 1
+                score += SCORE_CONCLUSION_WORDS
             if re.search(r"p\s*[<>=]\s*0\.\d+", sent_lower):
-                score += 3  # Statistical results
+                score += SCORE_STATISTICAL_RESULT
             if re.search(r"\d+%", sent):
-                score += 1  # Percentages
-            if len(sent) < 150:
-                score += 1  # Prefer concise sentences
+                score += SCORE_PERCENTAGE
+            if len(sent) < MAX_CONCISE_SENTENCE_LENGTH:
+                score += SCORE_CONCISE
 
             scored.append((score, sent))
 
@@ -73,7 +84,7 @@ def extract_key_points(
             # Remove citations
             point = re.sub(r"\([^)]*\d{4}[^)]*\)", "", point)
             # Remove excessive detail in parentheses
-            point = re.sub(r"\([^)]{50,}\)", "", point)
+            point = re.sub(rf"\([^)]{{{MAX_PARENTHESIS_LENGTH},}}\)", "", point)
             point = point.strip()
             if point:
                 simplified.append(point)
