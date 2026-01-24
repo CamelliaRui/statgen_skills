@@ -3,6 +3,7 @@
 import pytest
 from pathlib import Path
 import tempfile
+from pptx import Presentation
 
 
 def test_generate_presentation_config():
@@ -187,3 +188,47 @@ def test_generator_full_workflow():
         assert output_path.exists()
         # File should have some content
         assert output_path.stat().st_size > 0
+
+
+def test_generator_generate_with_paper_content():
+    """Test that generate produces slides with paper content."""
+    from scripts.presentation.generator import PresentationGenerator, PresentationConfig
+    from scripts.presentation.paper_extractor import PaperContent
+
+    config = PresentationConfig(
+        presentation_type="journal_club",
+        structure="imrad",
+        slide_counts={"introduction": 2, "results": 2},
+        include_supplementary=False,
+        content_mode="extractive",
+    )
+
+    generator = PresentationGenerator(config)
+
+    # Inject mock paper content
+    generator.paper_content = PaperContent(
+        title="Test Paper Title",
+        authors=["Author One", "Author Two"],
+        abstract="Test abstract content.",
+        sections={
+            "introduction": "This study investigates important research questions.",
+            "results": "We found significant results in our analysis.",
+        },
+        figures=[],
+        tables=[],
+        references=[],
+    )
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        output_path = Path(tmpdir) / "test_paper_content.pptx"
+
+        result = generator.generate(output_path)
+
+        assert result.exists()
+        prs = Presentation(str(result))
+        assert len(prs.slides) >= 3  # Title + at least some content
+
+        # Verify title slide has paper title
+        first_slide = prs.slides[0]
+        slide_text = " ".join([shape.text for shape in first_slide.shapes if hasattr(shape, "text")])
+        assert "Test Paper Title" in slide_text

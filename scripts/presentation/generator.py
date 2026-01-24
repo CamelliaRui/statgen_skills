@@ -24,6 +24,17 @@ from .pptx_builder import (
 )
 
 
+# Slide dimension constants (16:9 widescreen)
+DEFAULT_SLIDE_WIDTH = 13.333  # inches
+DEFAULT_SLIDE_HEIGHT = 7.5    # inches
+
+# Author display constants
+MAX_AUTHORS_DISPLAYED = 3
+
+# Section order for IMRAD structure
+IMRAD_SECTION_ORDER = ["introduction", "methods", "results", "discussion", "conclusions"]
+
+
 # Default configuration directory
 CONFIG_DIR = Path(__file__).parent.parent.parent / "templates" / "presentation" / "configs"
 
@@ -197,8 +208,8 @@ class PresentationGenerator:
             Path to the generated presentation
         """
         # Determine slide dimensions from template or use defaults
-        width = 13.333
-        height = 7.5
+        width = DEFAULT_SLIDE_WIDTH
+        height = DEFAULT_SLIDE_HEIGHT
 
         if self.template_style:
             width = self.template_style.slide_width
@@ -213,8 +224,8 @@ class PresentationGenerator:
         if self.paper_content:
             title = self.paper_content.title
             if self.paper_content.authors:
-                subtitle = ", ".join(self.paper_content.authors[:3])
-                if len(self.paper_content.authors) > 3:
+                subtitle = ", ".join(self.paper_content.authors[:MAX_AUTHORS_DISPLAYED])
+                if len(self.paper_content.authors) > MAX_AUTHORS_DISPLAYED:
                     subtitle += " et al."
 
         add_title_slide(prs, title, subtitle)
@@ -232,7 +243,7 @@ class PresentationGenerator:
         )
 
         # Build slides for each section
-        section_order = ["introduction", "methods", "results", "discussion", "conclusion"]
+        section_order = IMRAD_SECTION_ORDER
 
         for section_name in section_order:
             if section_name not in self.config.slide_counts:
