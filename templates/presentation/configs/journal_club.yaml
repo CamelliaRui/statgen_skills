@@ -1,0 +1,13 @@
+name: Journal Club
+duration_minutes: 30-45
+detail_level: standard
+default_slides:
+  title: 1
+  introduction: 3
+  methods: 3
+  results: 8
+  discussion: 3
+  conclusions: 1
+  questions: 1
+total_default: 20
+figure_preference: key_results
