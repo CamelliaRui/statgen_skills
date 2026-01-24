@@ -6,13 +6,16 @@ template and configuration.
 """
 
 from pathlib import Path
-from typing import List, Optional, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE
 import io
+
+# Slide layout constants
+BLANK_LAYOUT_INDEX = 6  # Index for blank slide layout in default templates
 
 
 def create_presentation(
@@ -52,7 +55,7 @@ def add_title_slide(
         presenter: Presenter name
         date: Presentation date
     """
-    slide_layout = prs.slide_layouts[6]  # Blank layout
+    slide_layout = prs.slide_layouts[BLANK_LAYOUT_INDEX]  # Blank layout
     slide = prs.slides.add_slide(slide_layout)
 
     # Add title
@@ -110,7 +113,7 @@ def add_content_slide(
         bullets: List of bullet point strings
         font_size: Font size for bullets
     """
-    slide_layout = prs.slide_layouts[6]  # Blank layout
+    slide_layout = prs.slide_layouts[BLANK_LAYOUT_INDEX]  # Blank layout
     slide = prs.slides.add_slide(slide_layout)
 
     # Add title
@@ -156,7 +159,7 @@ def add_figure_slide(
         figure_bytes: Image bytes
         caption: Figure caption
     """
-    slide_layout = prs.slide_layouts[6]  # Blank layout
+    slide_layout = prs.slide_layouts[BLANK_LAYOUT_INDEX]  # Blank layout
     slide = prs.slides.add_slide(slide_layout)
 
     # Add title
@@ -200,7 +203,7 @@ def add_section_header_slide(
         prs: Presentation object
         section_name: Name of the section
     """
-    slide_layout = prs.slide_layouts[6]  # Blank layout
+    slide_layout = prs.slide_layouts[BLANK_LAYOUT_INDEX]  # Blank layout
     slide = prs.slides.add_slide(slide_layout)
 
     # Add section title centered

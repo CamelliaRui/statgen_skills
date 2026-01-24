@@ -55,3 +55,13 @@ def test_save_presentation():
 
     # Cleanup
     output_path.unlink()
+
+
+def test_add_section_header_slide():
+    """Test adding a section header slide."""
+    from scripts.presentation.pptx_builder import create_presentation, add_section_header_slide
+
+    prs = create_presentation()
+    add_section_header_slide(prs, "Methods")
+
+    assert len(prs.slides) == 1
