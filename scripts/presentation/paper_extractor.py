@@ -17,9 +17,9 @@ class PaperContent:
     authors: List[str]
     abstract: str
     sections: Dict[str, str]  # section_name -> content
-    figures: List[Tuple[int, bytes, str]]  # (fig_num, image_bytes, caption)
-    tables: List[Tuple[int, str, str]]  # (table_num, table_md, caption)
-    references: List[str]
+    figures: List[Tuple[int, bytes, str]] = field(default_factory=list)  # (fig_num, image_bytes, caption)
+    tables: List[Tuple[int, str, str]] = field(default_factory=list)  # (table_num, table_md, caption)
+    references: List[str] = field(default_factory=list)
 
 
 def extract_text(pdf_path: Path) -> str:
@@ -91,7 +91,9 @@ def parse_sections(markdown_text: str) -> Dict[str, str]:
 
         if section_type:
             # Extract content until next header of same or higher level
-            start = pos + len(level) + len(title) + 2
+            # Find the actual end of the header line (after newline/whitespace prefix)
+            header_end = markdown_text.find("\n", pos + 1)
+            start = header_end + 1 if header_end != -1 else pos + len(level) + len(title) + 2
 
             # Find end (next header of same/higher level)
             end = len(markdown_text)
@@ -147,8 +149,8 @@ def extract_title_and_authors(markdown_text: str) -> Tuple[str, List[str]]:
         match = re.search(pattern, markdown_text[:2000], re.IGNORECASE)
         if match:
             author_text = match.group(1)
-            # Split by comma or "and"
-            authors = [a.strip() for a in re.split(r",|\band\b", author_text) if a.strip()]
+            # Split by comma or " and " (with spaces to avoid splitting names like "Anderson")
+            authors = [a.strip() for a in re.split(r",\s*|\s+and\s+", author_text) if a.strip()]
             if authors:
                 break
 
