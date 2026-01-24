@@ -71,7 +71,8 @@ def test_config_loading():
 
     config = load_config("journal_club")
 
-    assert "default_slides" in config or "name" in config
+    assert "default_slides" in config
+    assert "name" in config
 
 
 def test_generator_with_custom_slide_counts():
@@ -168,7 +169,7 @@ def test_all_presentation_types(presentation_type):
 
     # Verify the presentation is valid
     prs = Presentation(str(result))
-    assert len(prs.slides) >= 1  # At least title slide
+    assert len(prs.slides) >= 3  # Title slide + at least some content slides
 
     # Cleanup
     output_path.unlink()
@@ -458,14 +459,12 @@ def test_zero_slide_count_skipped():
 
     # Verify methods section was skipped
     prs = Presentation(str(result))
-    all_text = " ".join([
-        shape.text for slide in prs.slides
-        for shape in slide.shapes if hasattr(shape, "text")
-    ])
 
-    # Methods should not appear as a section header
-    # (it might still appear if extracted into other content)
-    # We mainly verify the presentation was created successfully
-    assert len(prs.slides) >= 1
+    # Verify "Methods" doesn't appear as a section header
+    for slide in prs.slides:
+        for shape in slide.shapes:
+            if hasattr(shape, "text"):
+                # Check that "Methods" is not a section header (large text in center)
+                assert shape.text != "Methods", "Methods section should have been skipped"
 
     output_path.unlink()
