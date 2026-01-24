@@ -6,7 +6,7 @@ Uses markitdown to convert PDF to markdown, then parses sections.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 import re
 
 
@@ -223,7 +223,7 @@ def extract_figures(
                     figure_num += 1
 
                     # Try to extract caption from nearby text
-                    caption = _extract_figure_caption(page, img_idx, figure_num)
+                    caption = _extract_figure_caption(page, figure_num)
 
                     # Check if supplementary
                     if main_only:
@@ -234,19 +234,22 @@ def extract_figures(
                     figures.append((figure_num, image_bytes, caption))
 
                 except Exception:
-                    continue  # Silently ignore: individual image extraction may fail
+                    # Skip images that fail to extract (corrupt data, unsupported format)
+                    continue
 
         doc.close()
 
     except ImportError:
-        pass  # Silently ignore: pymupdf not installed
+        # pymupdf not installed - return empty list
+        pass
     except Exception:
-        pass  # Silently ignore: PDF processing may fail for various reasons
+        # PDF processing failures (corrupt file, permission issues) - return partial results
+        pass
 
     return figures
 
 
-def _extract_figure_caption(page, img_idx: int, figure_num: int) -> str:
+def _extract_figure_caption(page: Any, figure_num: int) -> str:
     """Extract caption for a figure from page text."""
     try:
         text = page.get_text()
@@ -266,7 +269,8 @@ def _extract_figure_caption(page, img_idx: int, figure_num: int) -> str:
                 return caption[:500]  # Limit length
 
     except Exception:
-        pass  # Silently ignore: caption extraction may fail
+        # Caption extraction may fail due to text encoding issues - use default
+        pass
 
     return f"Figure {figure_num}"
 
