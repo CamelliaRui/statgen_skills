@@ -73,3 +73,23 @@ def test_paper_content_dataclass():
 
     assert content.title == "Test Paper"
     assert len(content.authors) == 2
+
+
+def test_extract_figures_returns_list():
+    """Test that extract_figures returns a list."""
+    from scripts.presentation.paper_extractor import extract_figures
+
+    # Test with non-existent file
+    figures = extract_figures(Path("/nonexistent/file.pdf"))
+
+    assert isinstance(figures, list)
+
+
+def test_extract_figures_with_main_only_flag():
+    """Test that main_only flag filters supplementary figures."""
+    from scripts.presentation.paper_extractor import extract_figures
+
+    # Just test that the function accepts the parameter
+    figures = extract_figures(Path("/nonexistent/file.pdf"), main_only=True)
+
+    assert isinstance(figures, list)

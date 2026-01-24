@@ -182,6 +182,95 @@ def extract_abstract(markdown_text: str) -> str:
     return ""
 
 
+def extract_figures(
+    pdf_path: Path,
+    main_only: bool = False
+) -> List[Tuple[int, bytes, str]]:
+    """
+    Extract figures from PDF.
+
+    Args:
+        pdf_path: Path to PDF file
+        main_only: If True, exclude supplementary figures
+
+    Returns:
+        List of (figure_number, image_bytes, caption) tuples
+    """
+    figures = []
+
+    if not pdf_path.exists():
+        return figures
+
+    try:
+        import fitz  # pymupdf
+
+        doc = fitz.open(str(pdf_path))
+        figure_num = 0
+
+        for page_num, page in enumerate(doc):
+            images = page.get_images()
+
+            for img_idx, img in enumerate(images):
+                try:
+                    xref = img[0]
+                    base_image = doc.extract_image(xref)
+                    image_bytes = base_image["image"]
+
+                    # Skip very small images (likely icons)
+                    if len(image_bytes) < 5000:
+                        continue
+
+                    figure_num += 1
+
+                    # Try to extract caption from nearby text
+                    caption = _extract_figure_caption(page, img_idx, figure_num)
+
+                    # Check if supplementary
+                    if main_only:
+                        caption_lower = caption.lower()
+                        if "supplement" in caption_lower or "supp" in caption_lower or "s" in caption_lower[:5]:
+                            continue
+
+                    figures.append((figure_num, image_bytes, caption))
+
+                except Exception:
+                    continue  # Silently ignore: individual image extraction may fail
+
+        doc.close()
+
+    except ImportError:
+        pass  # Silently ignore: pymupdf not installed
+    except Exception:
+        pass  # Silently ignore: PDF processing may fail for various reasons
+
+    return figures
+
+
+def _extract_figure_caption(page, img_idx: int, figure_num: int) -> str:
+    """Extract caption for a figure from page text."""
+    try:
+        text = page.get_text()
+
+        # Look for "Figure X" or "Fig. X" patterns
+        patterns = [
+            rf"(?:Figure|Fig\.?)\s*{figure_num}[:\.]?\s*([^\n]+(?:\n(?![A-Z]|\d|Figure|Fig)[^\n]+)*)",
+            rf"(?:Figure|Fig\.?)\s*{figure_num}[:\.]?\s*(.{{50,500}})",
+        ]
+
+        for pattern in patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                caption = match.group(1).strip()
+                # Clean up caption
+                caption = re.sub(r"\s+", " ", caption)
+                return caption[:500]  # Limit length
+
+    except Exception:
+        pass  # Silently ignore: caption extraction may fail
+
+    return f"Figure {figure_num}"
+
+
 def extract_paper_content(pdf_path: Path) -> PaperContent:
     """
     Extract all content from a research paper PDF.
