@@ -586,3 +586,258 @@ def test_jvp_matches_finite_difference():
         jtu.tree_map(lambda a, b: jnp.allclose(a, b, atol=1e-4, rtol=1e-4), t_out, t_expected)
     )
 ```
+
+---
+
+# Repository Guidelines
+
+## Environment Setup (micromamba)
+- Run all Python-based commands inside the existing micromamba env named `jax` (`python`, `pip`, `hatch`, `pytest`, `mkdocs`, etc.).
+- Initialize your shell (zsh): `eval "$(micromamba shell hook --shell zsh)"`
+- Activate: `micromamba activate jax`
+- Sanity check: `which python` should point into the `jax` env.
+
+## Coding Style & Naming Conventions
+- Python ≥ 3.10; use the `src/` layout (imports should be `mut_var.*`).
+- Formatting/linting is enforced via `ruff`/`ruff-format` and type checking via `mypy` (see `.pre-commit-config.yaml`).
+  - Format: `ruff format src tests`
+  - Lint (and autofix safe issues): `ruff check --fix src tests`
+  - Types: `mypy src`
+  - Hooks: `pre-commit install` then `pre-commit run -a`
+- Follow existing naming: modules/functions are `snake_case`, classes are `PascalCase`.
+
+## Docstring conventions
+
+All functions and methods MUST use the following docstring format:
+
+```python
+r"""Description of function/method.
+
+**Arguments:**
+
+- `argument_one`: Description.
+- `argument_two`: Description.
+
+**Returns:**
+
+Description.
+"""
+```
+
+
+All classes MUST use the following docstring format:
+
+```python
+r"""Detailed description of class.
+"""
+```
+
+Mkdocs-material style admonitions may be used to provide nicer formatted subsections, if helpful.
+For example,
+
+```python
+r"""Description.
+!!! qualifier
+
+    Subsection.
+"""
+```
+where `qualifier` are appropriate admonition types (e.g., `note`, `abstract`, `info`, `tip`, etc.). Any admonitions
+should *always* come before `Arguments`, *never* after.
+
+Docstrings should not exceed the line length defined in `pyproject.toml` as `line-length` under
+the `[tool.ruff]` section.
+
+### Private functions/methods/classes
+Do not document any functions/methods/classes that begin with an underscore. Eg.., `_func`. If
+a private function/method/class has *existing* documentation, leave it untouched.
+
+### Math notation
+
+If a docstring uses mathematical notation to describe behavior, it should using "$$" notation.
+Specifically:
+
+- If the function/method/class description uses mathematical notation it should use
+$expression$ notation.
+- If an argument to a function/method/class uses mathematical notation in its description.
+it should use `$expression$` notation.
+- Math notation should *never* be used under the "**Returns:**" section.
+
+### Internal function/method/class cross-references
+
+If a docstring cross-references a function/method/class defined **within** our project, use the
+[`project.function`][] notation.
+If a docstring cross-references a function/method/class defined **outside** our project, use
+`outside.function` notation.
+
+
+## Testing Guidelines
+- Framework: `pytest` (configured via Hatch in `pyproject.toml`).
+- Prefer small, deterministic unit tests under `tests/test_*.py`; use `pytest.mark.parametrize` where it improves coverage.
+
+## Commit & Pull Request Guidelines
+- Commit messages in history are short and descriptive (e.g., "fixed …", "added …", "updated …"). Keep that style.
+- PRs should include: clear description, command(s) run (e.g., `hatch run test:run`), and any relevant example/doc updates.
+
+## Configuration Tips
+- JAX backend selection can affect performance and numerics; document platform assumptions (CPU/GPU) when changing inference code.
+
+---
+
+# Development Guidelines
+
+The requirements of the program are provided in the file Requirements.md. First, you should note the scope of the entire program, and then implement parts of the program in small chunks, keeping the commit sizes small (i.e. around 100 lines of code). As development progresses, you should suggest implementing the next part of the program in the Requirements.md
+
+## Philosophy
+
+### Core Beliefs
+
+- **Tests-first** - Write a test before implementing a feature
+- **Incremental progress over big bangs** - Small changes that compile and pass tests
+- **Learning from existing code** - Study and plan before implementing
+- **Pragmatic over dogmatic** - Adapt to project reality
+- **Clear intent over clever code** - Be boring and obvious
+
+### Simplicity Means
+
+- Single responsibility per function/class
+- Avoid premature abstractions
+- No clever tricks - choose the boring solution
+- If you need to explain it, it's too complex
+
+## Process
+
+### 1. Planning & Staging
+
+Break complex work into 3-5 stages. Document in `IMPLEMENTATION_PLAN.md`:
+
+```markdown
+## Stage N: [Name]
+**Goal**: [Specific deliverable]
+**Success Criteria**: [Testable outcomes]
+**Tests**: [Specific test cases]
+**Status**: [Not Started|In Progress|Complete]
+```
+- Update status as you progress
+- Remove file when all stages are done
+
+### 2. Implementation Flow
+
+1. **Understand** - Study existing patterns in codebase
+2. **Test** - Write test first (red)
+3. **Implement** - Minimal code to pass (green)
+4. **Refactor** - Clean up with tests passing
+5. **Commit** - With clear message linking to plan
+
+### 3. When Stuck (After 3 Attempts)
+
+**CRITICAL**: Maximum 3 attempts per issue, then STOP.
+
+1. **Document what failed**:
+   - What you tried
+   - Specific error messages
+   - Why you think it failed
+
+2. **Research alternatives**:
+   - Find 2-3 similar implementations
+   - Note different approaches used
+
+3. **Question fundamentals**:
+   - Is this the right abstraction level?
+   - Can this be split into smaller problems?
+   - Is there a simpler approach entirely?
+
+4. **Try different angle**:
+   - Different library/framework feature?
+   - Different architectural pattern?
+   - Remove abstraction instead of adding?
+
+## Technical Standards
+
+### Architecture Principles
+
+- **Composition over inheritance** - Use dependency injection
+- **Interfaces over singletons** - Enable testing and flexibility
+- **Explicit over implicit** - Clear data flow and dependencies
+- **Test-driven when possible** - Never disable tests, fix them
+
+### Code Quality
+
+- **Every commit must**:
+  - Compile successfully
+  - Pass all existing tests
+  - Include tests for new functionality
+  - Follow project formatting/linting
+
+- **Before committing**:
+  - Run formatters/linters
+  - Self-review changes
+  - Ensure commit message explains "why"
+
+### Error Handling
+
+- Fail fast with descriptive messages
+- Include context for debugging
+- Handle errors at appropriate level
+- Never silently swallow exceptions
+
+## Decision Framework
+
+When multiple valid approaches exist, choose based on:
+
+1. **Testability** - Can I easily test this?
+2. **Readability** - Will someone understand this in 6 months?
+3. **Consistency** - Does this match project patterns?
+4. **Simplicity** - Is this the simplest solution that works?
+5. **Reversibility** - How hard to change later?
+
+## Project Integration
+
+### Learning the Codebase
+
+- Find 3 similar features/components
+- Identify common patterns and conventions
+- Use same libraries/utilities when possible
+- Follow existing test patterns
+
+### Tooling
+
+- Use project's existing build system
+- Use project's test framework
+- Use project's formatter/linter settings
+- Don't introduce new tools without strong justification
+
+## Quality Gates
+
+### Definition of Done
+
+- [ ] Tests written and passing
+- [ ] Code follows project conventions
+- [ ] No linter/formatter warnings
+- [ ] Commit messages are clear
+- [ ] Implementation matches plan
+- [ ] No TODOs without issue numbers
+
+### Test Guidelines
+
+- Test behavior, not implementation
+- One assertion per test when possible
+- Clear test names describing scenario
+- Use existing test utilities/helpers
+- Tests should be deterministic
+- Tests should cover positive/negative expectations
+- Tests should seek to cover edge cases
+
+## Important Reminders
+
+**NEVER**:
+- Use `--no-verify` to bypass commit hooks
+- Disable tests instead of fixing them
+- Commit code that doesn't compile
+- Make assumptions - verify with existing code
+
+**ALWAYS**:
+- Commit working code incrementally
+- Update plan documentation as you go
+- Learn from existing implementations
+- Stop after 3 failed attempts and reassess
