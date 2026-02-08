@@ -1,6 +1,6 @@
 # statgen_skills
 
-An [Agent Skill](https://agentskills.io) for statistical genetics workflows: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, presentation generation, and JAX/Equinox coding guidelines.
+An [Agent Skill](https://agentskills.io) for statistical genetics workflows: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and JAX/Equinox coding guidelines.
 
 Compatible with any tool that supports the Agent Skills open standard, including **Claude Code**, **OpenAI Codex**, **GitHub Copilot**, **Gemini CLI**, **Cursor**, and more.
 
@@ -49,7 +49,7 @@ install.packages(c("susieR", "data.table", "jsonlite", "optparse", "glmnet"))
 **Python** (required for LDSC, TWAS, visualization):
 
 ```bash
-uv pip install pandas numpy matplotlib plotly openpyxl seaborn scipy scikit-learn python-pptx
+uv pip install pandas numpy matplotlib plotly openpyxl seaborn scipy scikit-learn
 ```
 
 ## Quick Start
@@ -64,8 +64,6 @@ Once the skill is installed, just ask in natural language:
 "Simulate a TWAS with 100 genes, 10 causal, h2_cis=0.1"
 
 "Run TWAS on my schizophrenia GWAS using GTEx brain cortex"
-
-"Create a journal club presentation from this paper"
 ```
 
 The agent automatically loads the skill when your request matches statistical genetics topics. In Claude Code, you can also invoke it directly:
@@ -89,7 +87,6 @@ The agent automatically loads the skill when your request matches statistical ge
 | **LDSC** | SNP heritability, genetic correlations, partitioned heritability |
 | **TWAS Simulator** | Simulate TWAS for power analysis and methods development |
 | **FUSION TWAS** | Gene-trait associations using GTEx v8 weights (49 tissues) |
-| **Presentation Generator** | PPTX slides from research papers (journal club, lab meeting, conference) |
 | **JAX/Equinox Guidelines** | Coding rules, checklists, and snippets for numerical computing |
 
 ## Project Structure
@@ -102,7 +99,6 @@ statgen_skills/
 │   ├── ldsc.md
 │   ├── twas-sim.md
 │   ├── fusion.md
-│   ├── presentation.md
 │   ├── input-formats.md
 │   └── jax-equinox.md
 ├── scripts/                    # Implementation code
@@ -110,10 +106,8 @@ statgen_skills/
 │   ├── ldsc/                   # LDSC Python runner
 │   ├── twas/                   # TWAS simulator + models
 │   ├── fusion/                 # FUSION TWAS runner
-│   ├── presentation/           # PDF-to-PPTX generator
 │   └── utils/
 ├── visualization/              # Publication-ready plots
-├── templates/                  # PPTX templates
 ├── tests/                      # pytest test suites
 └── examples/                   # Example data and tutorials
 ```

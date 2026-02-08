@@ -2,13 +2,11 @@
 name: statgen-skills
 description: >-
   Runs statistical genetics analyses including SuSiE fine-mapping, LDSC
-  heritability and genetic correlations, TWAS simulation, FUSION TWAS with
-  GTEx weights, and scientific presentation generation from papers. Includes
-  JAX/Equinox coding guidelines for numerical computing. Use when working with
-  GWAS summary statistics, fine-mapping, heritability estimation, genetic
-  correlations, gene-trait associations, eQTL analysis, generating journal
-  club or conference slides, or writing JAX/Equinox code for statistical
-  genetics.
+  heritability and genetic correlations, TWAS simulation, and FUSION TWAS with
+  GTEx weights. Includes JAX/Equinox coding guidelines for numerical computing.
+  Use when working with GWAS summary statistics, fine-mapping, heritability
+  estimation, genetic correlations, gene-trait associations, eQTL analysis, or
+  writing JAX/Equinox code for statistical genetics.
 ---
 
 # Statistical Genetics Skills
@@ -45,14 +43,6 @@ Run TWAS with pre-computed GTEx v8 expression weights (49 tissues) to find genes
 
 See [reference/fusion.md](reference/fusion.md) for parameters, requirements, and workflow.
 
-### Presentation Generator
-
-Generate PPTX presentations from research paper PDFs. Supports Journal Club (~20 slides), Lab Meeting (~30 slides), and Conference Talk (~12-25 slides) formats.
-
-**API:** `generate_presentation()`, `PresentationGenerator()`, `load_config()`
-
-See [reference/presentation.md](reference/presentation.md) for types, scripts, and workflow.
-
 ## JAX/Equinox Development
 
 Guidelines for writing numerical code with JAX and Equinox: module patterns (abstract/final), JIT boundaries, PRNG discipline, PyTree stability, numerics, and linear algebra. Includes checklists and code snippets.
@@ -81,5 +71,4 @@ See [reference/input-formats.md](reference/input-formats.md) for summary statist
 "Calculate genetic correlations between height, BMI, and educational attainment"
 "Simulate a TWAS with 100 genes, 10 causal, h2_cis=0.1"
 "Run TWAS on my schizophrenia GWAS using GTEx brain cortex"
-"Create a journal club presentation from this paper"
 ```
