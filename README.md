@@ -1,36 +1,41 @@
 # statgen_skills
 
-A Claude skill for statistical genetics workflows: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, presentation generation, and JAX/Equinox coding guidelines.
+An [Agent Skill](https://agentskills.io) for statistical genetics workflows: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, presentation generation, and JAX/Equinox coding guidelines.
 
-## Install as a Claude Code Skill
+Compatible with any tool that supports the Agent Skills open standard, including **Claude Code**, **OpenAI Codex**, **GitHub Copilot**, **Gemini CLI**, **Cursor**, and more.
 
-### Option 1: Personal skill (available in all your projects)
+## Installation
+
+### Claude Code
 
 ```bash
-# Clone into your personal skills directory
+# Personal skill (all projects)
 git clone https://github.com/CamelliaRui/statgen_skills.git ~/.claude/skills/statgen-skills
-```
 
-### Option 2: Project skill (available in one project only)
-
-```bash
-# From your project root
+# Or project skill (one project only)
 git clone https://github.com/CamelliaRui/statgen_skills.git .claude/skills/statgen-skills
-```
 
-### Option 3: Additional directory
-
-```bash
-# Clone anywhere and point Claude Code to it
+# Or additional directory
 git clone https://github.com/CamelliaRui/statgen_skills.git ~/statgen_skills
 claude --add-dir ~/statgen_skills
 ```
 
-After installing, verify the skill is loaded:
+### OpenAI Codex
+
+```bash
+# Clone into your project's .skills directory
+git clone https://github.com/CamelliaRui/statgen_skills.git .skills/statgen-skills
+```
+
+### Other Agent Skills-compatible tools
+
+Clone the repo and point your tool to the directory containing `SKILL.md`. The skill follows the [Agent Skills open standard](https://agentskills.io), so any compatible tool will discover it automatically.
+
+### Verify installation
 
 ```
 > What skills are available?
-# Claude should list "statgen-skills" with its description
+# Should list "statgen-skills" with its description
 ```
 
 ### Install Dependencies
@@ -49,7 +54,7 @@ uv pip install pandas numpy matplotlib plotly openpyxl seaborn scipy scikit-lear
 
 ## Quick Start
 
-Once the skill is installed, just ask Claude in natural language:
+Once the skill is installed, just ask in natural language:
 
 ```
 "Estimate the SNP heritability for my height GWAS using EUR reference"
@@ -63,7 +68,7 @@ Once the skill is installed, just ask Claude in natural language:
 "Create a journal club presentation from this paper"
 ```
 
-Claude automatically loads the skill when your request matches statistical genetics topics. You can also invoke it directly:
+The agent automatically loads the skill when your request matches statistical genetics topics. In Claude Code, you can also invoke it directly:
 
 ```
 /statgen-skills Run LDSC genetic correlation between height and BMI
@@ -73,7 +78,7 @@ Claude automatically loads the skill when your request matches statistical genet
 
 - **Provide context**: mention sample size, population ancestry, and analysis goals
 - **Specify file paths**: use absolute paths or ensure files are in the working directory
-- **Ask for explanations**: Claude can interpret PIPs, credible sets, heritability estimates
+- **Ask for explanations**: the agent can interpret PIPs, credible sets, heritability estimates
 - **Iterate**: start with defaults, then refine based on initial results
 
 ## What's Included
@@ -91,7 +96,7 @@ Claude automatically loads the skill when your request matches statistical genet
 
 ```
 statgen_skills/
-├── SKILL.md                    # Skill entry point (loaded by Claude)
+├── SKILL.md                    # Skill entry point (loaded by agent)
 ├── reference/                  # Detailed docs (loaded on-demand)
 │   ├── susie.md
 │   ├── ldsc.md
