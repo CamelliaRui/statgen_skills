@@ -44,7 +44,7 @@ install.packages(c("susieR", "data.table", "jsonlite", "optparse", "glmnet"))
 **Python** (required for LDSC, TWAS, visualization):
 
 ```bash
-pip install pandas numpy matplotlib plotly openpyxl seaborn scipy scikit-learn python-pptx
+uv pip install pandas numpy matplotlib plotly openpyxl seaborn scipy scikit-learn python-pptx
 ```
 
 ## Quick Start
