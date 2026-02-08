@@ -3,10 +3,12 @@ name: statgen-skills
 description: >-
   Runs statistical genetics analyses including SuSiE fine-mapping, LDSC
   heritability and genetic correlations, TWAS simulation, FUSION TWAS with
-  GTEx weights, and scientific presentation generation from papers. Use when
-  working with GWAS summary statistics, fine-mapping, heritability estimation,
-  genetic correlations, gene-trait associations, eQTL analysis, or generating
-  journal club, lab meeting, or conference slides from research papers.
+  GTEx weights, and scientific presentation generation from papers. Includes
+  JAX/Equinox coding guidelines for numerical computing. Use when working with
+  GWAS summary statistics, fine-mapping, heritability estimation, genetic
+  correlations, gene-trait associations, eQTL analysis, generating journal
+  club or conference slides, or writing JAX/Equinox code for statistical
+  genetics.
 ---
 
 # Statistical Genetics Skills
@@ -50,6 +52,12 @@ Generate PPTX presentations from research paper PDFs. Supports Journal Club (~20
 **API:** `generate_presentation()`, `PresentationGenerator()`, `load_config()`
 
 See [reference/presentation.md](reference/presentation.md) for types, scripts, and workflow.
+
+## JAX/Equinox Development
+
+Guidelines for writing numerical code with JAX and Equinox: module patterns (abstract/final), JIT boundaries, PRNG discipline, PyTree stability, numerics, and linear algebra. Includes checklists and code snippets.
+
+See [reference/jax-equinox.md](reference/jax-equinox.md) for rules, checklists, and ready-to-use patterns.
 
 ## Input Formats
 
