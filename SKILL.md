@@ -1,12 +1,10 @@
 ---
 name: statgen-skills
 description: >-
-  Runs statistical genetics analyses including SuSiE fine-mapping, LDSC
-  heritability and genetic correlations, TWAS simulation, and FUSION TWAS with
-  GTEx weights. Includes JAX/Equinox coding guidelines for numerical computing.
-  Use when working with GWAS summary statistics, fine-mapping, heritability
-  estimation, genetic correlations, gene-trait associations, eQTL analysis, or
-  writing JAX/Equinox code for statistical genetics.
+  Use when analyzing GWAS for causal variants, estimating genetic architecture,
+  mapping gene-trait associations, or writing statistical genetics code in
+  JAX/Equinox. Capabilities include fine-mapping (SuSiE), heritability (LDSC),
+  TWAS with GTEx weights, and tissue-specific eQTL analysis.
 ---
 
 # Statistical Genetics Skills
