@@ -1,10 +1,13 @@
 ---
-name: statgen-skills
+name: statgen-analysis
 description: >-
   Use when analyzing GWAS for causal variants, estimating genetic architecture,
   mapping gene-trait associations, or writing statistical genetics code in
   JAX/Equinox. Capabilities include fine-mapping (SuSiE), heritability (LDSC),
   TWAS with GTEx weights, and tissue-specific eQTL analysis.
+user-invocable: false
+metadata:
+  short-description: Statistical genetics analysis workflows
 ---
 
 # Statistical Genetics Skills
@@ -15,7 +18,7 @@ description: >-
 
 Identify causal variants at GWAS loci using Sum of Single Effects regression. Supports summary statistics or individual-level data, outputs credible sets and per-variant PIPs.
 
-See [reference/susie.md](reference/susie.md) for parameters, scripts, and workflow.
+See [reference/susie.md](../../reference/susie.md) for parameters, scripts, and workflow.
 
 ### LDSC (LD Score Regression)
 
@@ -23,7 +26,7 @@ Estimate SNP heritability, genetic correlations between traits, and partition he
 
 **API:** `estimate_heritability()`, `genetic_correlation()`, `partitioned_heritability()`, `munge_sumstats()`
 
-See [reference/ldsc.md](reference/ldsc.md) for parameters, scripts, and workflow.
+See [reference/ldsc.md](../../reference/ldsc.md) for parameters, scripts, and workflow.
 
 ### TWAS Simulator
 
@@ -31,7 +34,7 @@ Simulate transcriptome-wide association studies for methods development and powe
 
 **API:** `simulate_twas()`, `simulate_expression()`, `run_twas()`, `get_model()`
 
-See [reference/twas-sim.md](reference/twas-sim.md) for parameters, models, and workflow.
+See [reference/twas-sim.md](../../reference/twas-sim.md) for parameters, models, and workflow.
 
 ### FUSION TWAS
 
@@ -39,17 +42,17 @@ Run TWAS with pre-computed GTEx v8 expression weights (49 tissues) to find genes
 
 **API:** `run_twas_association()`, `list_available_tissues()`, `download_weights()`, `check_dependencies()`
 
-See [reference/fusion.md](reference/fusion.md) for parameters, requirements, and workflow.
+See [reference/fusion.md](../../reference/fusion.md) for parameters, requirements, and workflow.
 
 ## JAX/Equinox Development
 
 Guidelines for writing numerical code with JAX and Equinox: module patterns (abstract/final), JIT boundaries, PRNG discipline, PyTree stability, numerics, and linear algebra. Includes checklists and code snippets.
 
-See [reference/jax-equinox.md](reference/jax-equinox.md) for rules, checklists, and ready-to-use patterns.
+See [reference/jax-equinox.md](../../reference/jax-equinox.md) for rules, checklists, and ready-to-use patterns.
 
 ## Input Formats
 
-See [reference/input-formats.md](reference/input-formats.md) for summary statistics columns, LD matrix options, individual-level data formats, and output descriptions.
+See [reference/input-formats.md](../../reference/input-formats.md) for summary statistics columns, LD matrix options, individual-level data formats, and output descriptions.
 
 ## Scientific Figure Generation
 

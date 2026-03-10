@@ -53,7 +53,7 @@ test_*/
 
 # R data files (but allow examples/*.rds)
 *.rds
-!examples/*.rds
+!plugins/statgen-analysis/examples/*.rds
 
 # Environment
 .env

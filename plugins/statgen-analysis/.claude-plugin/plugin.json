@@ -1,0 +1,7 @@
+{
+  "name": "statgen-analysis",
+  "version": "0.1.0",
+  "description": "Statistical genetics analysis: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and publication-ready visualization.",
+  "commands": [],
+  "agents": []
+}

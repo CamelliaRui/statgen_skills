@@ -1,42 +1,37 @@
-# statgen_skills
+# statgen-skills
 
-An [Agent Skill](https://agentskills.io) for statistical genetics workflows: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and JAX/Equinox coding guidelines.
+A [scientific-software-playbook](https://github.com/mancusolab/scientific-software-playbook)-compatible plugin for downstream statistical genetics analysis: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and publication-ready visualization.
 
-Compatible with any tool that supports the Agent Skills open standard, including **Claude Code**, **OpenAI Codex**, **GitHub Copilot**, **Gemini CLI**, **Cursor**, and more.
+## How It Fits Together
+
+| Layer | Repository | Focus |
+|-------|-----------|-------|
+| **Upstream** | [scientific-software-playbook](https://github.com/mancusolab/scientific-software-playbook) | Model design, inference code, structured dev workflow |
+| **Downstream** | This repo (`statgen-analysis` plugin) | GWAS analysis, fine-mapping, heritability, TWAS |
+
+Install both to get an end-to-end agent-assisted statistical genetics workflow.
 
 ## Installation
 
 ### Claude Code
 
 ```bash
-# Personal skill (all projects)
-git clone https://github.com/CamelliaRui/statgen_skills.git ~/.claude/skills/statgen-skills
+# Install as a plugin
+git clone https://github.com/CamelliaRui/statgen_skills.git ~/.claude/plugins/statgen-skills
 
-# Or project skill (one project only)
-git clone https://github.com/CamelliaRui/statgen_skills.git .claude/skills/statgen-skills
-
-# Or additional directory
-git clone https://github.com/CamelliaRui/statgen_skills.git ~/statgen_skills
-claude --add-dir ~/statgen_skills
+# Or project-level
+git clone https://github.com/CamelliaRui/statgen_skills.git .claude/plugins/statgen-skills
 ```
 
 ### OpenAI Codex
 
 ```bash
-# Clone into your project's .skills directory
 git clone https://github.com/CamelliaRui/statgen_skills.git .skills/statgen-skills
 ```
 
 ### Other Agent Skills-compatible tools
 
-Clone the repo and point your tool to the directory containing `SKILL.md`. The skill follows the [Agent Skills open standard](https://agentskills.io), so any compatible tool will discover it automatically.
-
-### Verify installation
-
-```
-> What skills are available?
-# Should list "statgen-skills" with its description
-```
+Clone the repo and point your tool to the directory. The plugin follows the [Agent Skills open standard](https://agentskills.io) and the [scientific-software-playbook](https://github.com/mancusolab/scientific-software-playbook) plugin format.
 
 ### Install Dependencies
 
@@ -54,30 +49,14 @@ uv pip install pandas numpy matplotlib plotly openpyxl seaborn scipy scikit-lear
 
 ## Quick Start
 
-Once the skill is installed, just ask in natural language:
+Once the plugin is installed, just ask in natural language:
 
 ```
 "Estimate the SNP heritability for my height GWAS using EUR reference"
-
 "Run SuSiE on my GWAS summary stats with the provided LD matrix"
-
 "Simulate a TWAS with 100 genes, 10 causal, h2_cis=0.1"
-
 "Run TWAS on my schizophrenia GWAS using GTEx brain cortex"
 ```
-
-The agent automatically loads the skill when your request matches statistical genetics topics. In Claude Code, you can also invoke it directly:
-
-```
-/statgen-skills Run LDSC genetic correlation between height and BMI
-```
-
-### Tips
-
-- **Provide context**: mention sample size, population ancestry, and analysis goals
-- **Specify file paths**: use absolute paths or ensure files are in the working directory
-- **Ask for explanations**: the agent can interpret PIPs, credible sets, heritability estimates
-- **Iterate**: start with defaults, then refine based on initial results
 
 ## What's Included
 
@@ -87,30 +66,43 @@ The agent automatically loads the skill when your request matches statistical ge
 | **LDSC** | SNP heritability, genetic correlations, partitioned heritability |
 | **TWAS Simulator** | Simulate TWAS for power analysis and methods development |
 | **FUSION TWAS** | Gene-trait associations using GTEx v8 weights (49 tissues) |
-| **JAX/Equinox Guidelines** | Coding rules, checklists, and snippets for numerical computing |
+| **Visualization** | Publication-ready plots (locus zoom, Manhattan, PIP, heatmaps) |
 
 ## Project Structure
 
 ```
 statgen_skills/
-├── SKILL.md                    # Skill entry point (loaded by agent)
-├── reference/                  # Detailed docs (loaded on-demand)
-│   ├── susie.md
-│   ├── ldsc.md
-│   ├── twas-sim.md
-│   ├── fusion.md
-│   ├── input-formats.md
-│   └── jax-equinox.md
-├── scripts/                    # Implementation code
-│   ├── susie/                  # SuSiE R wrapper
-│   ├── ldsc/                   # LDSC Python runner
-│   ├── twas/                   # TWAS simulator + models
-│   ├── fusion/                 # FUSION TWAS runner
-│   └── utils/
-├── visualization/              # Publication-ready plots
-├── tests/                      # pytest test suites
-└── examples/                   # Example data and tutorials
+├── .claude-plugin/
+│   └── marketplace.json            # Plugin marketplace registry
+├── plugins/
+│   └── statgen-analysis/
+│       ├── .claude-plugin/
+│       │   └── plugin.json         # Plugin manifest
+│       ├── skills/
+│       │   └── statgen-analysis/
+│       │       └── SKILL.md        # Skill definition (loaded by agent)
+│       ├── scripts/                # Implementation code
+│       │   ├── susie/              # SuSiE R wrapper
+│       │   ├── ldsc/               # LDSC Python runner
+│       │   ├── twas/               # TWAS simulator + models
+│       │   ├── fusion/             # FUSION TWAS runner
+│       │   └── utils/
+│       ├── reference/              # Detailed docs (loaded on-demand)
+│       ├── visualization/          # Publication-ready plots
+│       ├── examples/               # Example data and tutorials
+│       └── tests/                  # pytest test suites
+├── AGENTS.md                       # Plugin asset source of truth
+├── README.md
+└── pytest.ini
 ```
+
+## Using with the Scientific Software Playbook
+
+This plugin is designed to complement the [scientific-software-playbook](https://github.com/mancusolab/scientific-software-playbook). When both are installed:
+
+1. Use the playbook's `scientific-plan-execute` for model design and structured development
+2. Use `statgen-analysis` for downstream GWAS analysis and visualization
+3. The playbook's house-style skills (JAX/Equinox, testing) apply to code written in both
 
 ## License
 

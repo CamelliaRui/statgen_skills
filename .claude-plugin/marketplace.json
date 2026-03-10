@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "statgen-skills",
+  "owner": {
+    "name": "CamelliaRui"
+  },
+  "metadata": {
+    "description": "Statistical genetics analysis skills for GWAS, fine-mapping, heritability, and TWAS workflows.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "statgen-analysis",
+      "source": "./plugins/statgen-analysis",
+      "description": "Statistical genetics analysis: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and publication-ready visualization.",
+      "version": "0.1.0",
+      "category": "scientific-computing"
+    }
+  ]
+}
