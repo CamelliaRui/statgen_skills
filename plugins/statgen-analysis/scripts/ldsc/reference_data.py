@@ -30,7 +30,7 @@ class PopulationPaths(TypedDict):
 
 def get_reference_dir() -> Path:
     """Return the directory where LDSC reference files are stored."""
-    return Path.home() / ".statgen_skills" / "ldsc_references"
+    return Path.home() / ".scientific_statgen_playbook" / "ldsc_references"
 
 
 def get_population_paths(population: str) -> PopulationPaths:

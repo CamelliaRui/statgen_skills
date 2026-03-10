@@ -81,9 +81,9 @@ def get_weights_dir() -> Path:
     Return the directory where FUSION weights are stored.
 
     Returns:
-        Path to ~/.statgen_skills/fusion_weights
+        Path to ~/.scientific_statgen_playbook/fusion_weights
     """
-    return Path.home() / ".statgen_skills" / "fusion_weights"
+    return Path.home() / ".scientific_statgen_playbook" / "fusion_weights"
 
 
 def get_ld_reference_dir() -> Path:
@@ -91,9 +91,9 @@ def get_ld_reference_dir() -> Path:
     Return the directory where LD reference panels are stored.
 
     Returns:
-        Path to ~/.statgen_skills/ld_reference
+        Path to ~/.scientific_statgen_playbook/ld_reference
     """
-    return Path.home() / ".statgen_skills" / "ld_reference"
+    return Path.home() / ".scientific_statgen_playbook" / "ld_reference"
 
 
 def list_available_tissues() -> list[str]:

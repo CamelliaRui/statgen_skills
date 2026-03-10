@@ -34,7 +34,7 @@ class GenotypeData(NamedTuple):
 
 def get_reference_dir() -> Path:
     """Return directory for TWAS reference files."""
-    return Path.home() / ".statgen_skills" / "twas_references"
+    return Path.home() / ".scientific_statgen_playbook" / "twas_references"
 
 
 def load_plink(prefix: str | Path) -> GenotypeData:

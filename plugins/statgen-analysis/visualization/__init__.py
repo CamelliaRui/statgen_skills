@@ -1,5 +1,5 @@
 """
-Visualization modules for statgen-skills.
+Visualization modules for scientific-statgen-playbook.
 
 This package provides plotting functions for SuSiE fine-mapping, LDSC, TWAS results, and FUSION TWAS.
 """

@@ -1,5 +1,5 @@
 """
-validate_input.py - Input validation utilities for statgen-skills
+validate_input.py - Input validation utilities for scientific-statgen-playbook
 
 Validates summary statistics, LD matrices, and individual-level data
 before running SuSiE fine-mapping.

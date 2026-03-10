@@ -1,6 +1,6 @@
 # LDSC Tutorial: Heritability and Genetic Correlation
 
-This tutorial demonstrates how to use LDSC within the statgen_skills toolkit.
+This tutorial demonstrates how to use LDSC within the scientific-statgen-playbook toolkit.
 
 ## Prerequisites
 

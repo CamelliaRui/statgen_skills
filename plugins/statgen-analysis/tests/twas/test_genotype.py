@@ -21,7 +21,7 @@ def test_get_reference_dir_returns_path():
     from scripts.twas.genotype import get_reference_dir
 
     ref_dir = get_reference_dir()
-    assert ref_dir == Path.home() / ".statgen_skills" / "twas_references"
+    assert ref_dir == Path.home() / ".scientific_statgen_playbook" / "twas_references"
 
 
 def test_subset_to_cis_region():

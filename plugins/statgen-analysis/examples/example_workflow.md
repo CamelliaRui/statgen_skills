@@ -1,6 +1,6 @@
 # SuSiE Fine-Mapping Workflow Example
 
-This guide walks through a complete fine-mapping analysis using the statgen-skills toolkit.
+This guide walks through a complete fine-mapping analysis using the scientific-statgen-playbook toolkit.
 
 ## Prerequisites
 

@@ -25,9 +25,9 @@ def get_fusion_dir() -> Path:
     Return the directory where FUSION TWAS is installed.
 
     Returns:
-        Path to ~/.statgen_skills/fusion_twas
+        Path to ~/.scientific_statgen_playbook/fusion_twas
     """
-    return Path.home() / ".statgen_skills" / "fusion_twas"
+    return Path.home() / ".scientific_statgen_playbook" / "fusion_twas"
 
 
 def check_r_installed() -> bool:

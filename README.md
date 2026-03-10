@@ -1,4 +1,4 @@
-# statgen-skills
+# scientific-statgen-playbook
 
 A [scientific-software-playbook](https://github.com/mancusolab/scientific-software-playbook)-compatible plugin for downstream statistical genetics analysis: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and publication-ready visualization.
 
@@ -17,16 +17,16 @@ Install both to get an end-to-end agent-assisted statistical genetics workflow.
 
 ```bash
 # Install as a plugin
-git clone https://github.com/CamelliaRui/statgen_skills.git ~/.claude/plugins/statgen-skills
+git clone https://github.com/CamelliaRui/scientific-statgen-playbook.git ~/.claude/plugins/scientific-statgen-playbook
 
 # Or project-level
-git clone https://github.com/CamelliaRui/statgen_skills.git .claude/plugins/statgen-skills
+git clone https://github.com/CamelliaRui/scientific-statgen-playbook.git .claude/plugins/scientific-statgen-playbook
 ```
 
 ### OpenAI Codex
 
 ```bash
-git clone https://github.com/CamelliaRui/statgen_skills.git .skills/statgen-skills
+git clone https://github.com/CamelliaRui/scientific-statgen-playbook.git .skills/scientific-statgen-playbook
 ```
 
 ### Other Agent Skills-compatible tools
@@ -71,7 +71,7 @@ Once the plugin is installed, just ask in natural language:
 ## Project Structure
 
 ```
-statgen_skills/
+scientific-statgen-playbook/
 ├── .claude-plugin/
 │   └── marketplace.json            # Plugin marketplace registry
 ├── plugins/

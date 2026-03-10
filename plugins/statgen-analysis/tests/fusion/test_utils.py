@@ -10,7 +10,7 @@ def test_get_fusion_dir_returns_path():
     from scripts.fusion.utils import get_fusion_dir
 
     fusion_dir = get_fusion_dir()
-    expected = Path.home() / ".statgen_skills" / "fusion_twas"
+    expected = Path.home() / ".scientific_statgen_playbook" / "fusion_twas"
     assert fusion_dir == expected
     assert isinstance(fusion_dir, Path)
 

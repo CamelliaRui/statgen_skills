@@ -1,5 +1,5 @@
 """
-Utility modules for statgen-skills.
+Utility modules for scientific-statgen-playbook.
 
 This package provides validation and helper functions.
 """

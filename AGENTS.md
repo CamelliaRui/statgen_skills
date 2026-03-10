@@ -1,4 +1,4 @@
-## statgen-skills (Plugin Format)
+## scientific-statgen-playbook (Plugin Format)
 
 This repository hosts one plugin for downstream statistical genetics analysis workflows.
 

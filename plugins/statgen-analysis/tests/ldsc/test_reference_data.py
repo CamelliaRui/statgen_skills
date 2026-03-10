@@ -7,7 +7,7 @@ def test_get_reference_dir_returns_expected_path():
     from scripts.ldsc.reference_data import get_reference_dir
 
     ref_dir = get_reference_dir()
-    expected = Path.home() / ".statgen_skills" / "ldsc_references"
+    expected = Path.home() / ".scientific_statgen_playbook" / "ldsc_references"
     assert ref_dir == expected
 
 

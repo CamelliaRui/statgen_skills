@@ -1,11 +1,11 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "statgen-skills",
+  "name": "scientific-statgen-playbook",
   "owner": {
     "name": "CamelliaRui"
   },
   "metadata": {
-    "description": "Statistical genetics analysis skills for GWAS, fine-mapping, heritability, and TWAS workflows.",
+    "description": "Statistical genetics analysis plugins for GWAS, fine-mapping, heritability, and TWAS workflows.",
     "version": "1.0.0"
   },
   "plugins": [
