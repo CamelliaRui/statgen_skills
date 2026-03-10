@@ -15,6 +15,13 @@
       "description": "Statistical genetics analysis: SuSiE fine-mapping, LDSC heritability, TWAS simulation, FUSION TWAS, and publication-ready visualization.",
       "version": "0.1.0",
       "category": "scientific-computing"
+    },
+    {
+      "name": "statgen-validation",
+      "source": "./plugins/statgen-validation",
+      "description": "Biological validation of GWAS findings via OpenTargets, GWAS Catalog, and Ensembl VEP APIs.",
+      "version": "0.1.0",
+      "category": "scientific-computing"
     }
   ]
 }

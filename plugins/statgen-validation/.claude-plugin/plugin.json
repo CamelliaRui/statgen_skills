@@ -1,0 +1,7 @@
+{
+  "name": "statgen-validation",
+  "version": "0.1.0",
+  "description": "Biological validation of statistical genetics findings via OpenTargets, GWAS Catalog, and Ensembl APIs.",
+  "commands": [],
+  "agents": []
+}
